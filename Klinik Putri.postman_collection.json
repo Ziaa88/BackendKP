@@ -1,0 +1,1666 @@
+{
+	"info": {
+		"_postman_id": "42cc0d45-62de-4991-ba4b-75213d5935f7",
+		"name": "Klinik Putri",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41536971"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token is returned\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.token).to.be.a('string').and.to.have.lengthOf.at.least(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Admin object is returned\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.admin).to.be.an('object');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"password123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/admin/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"admin",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "admin",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "admin123",
+									"disabled": true
+								}
+							]
+						},
+						"description": "## **Body Request**\n\n``` json\n{\n    \"username\": \"admin\",\n    \"password\": \"password123\"\n}\n ```\n\n## RESPONSE\n\n``` json\n{\n    \"admin\": {\n        \"id\": 2,\n        \"nama\": \"admin\",\n        \"username\": \"admin\",\n        \"password\": \"$2b$10$SKe7UpdQJHUv1dPgcHqkF.oztmjAyVnYaKrZzJKyvTTAsexprtvqe\",\n        \"foto\": \"\",\n        \"aktif\": true,\n        \"createdAt\": \"2025-04-07T11:27:27.729Z\",\n        \"updatedAt\": \"2025-04-07T11:27:27.729Z\"\n    },\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtYSI6ImFkbWluIiwiZm90byI6IiIsImFrdGlmIjp0cnVlLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDQwMjY2MTgsImV4cCI6MTc0NDAzMDIxOH0.MfZmLMM9wsXP4XLyUqxZXvydDieUYxUOBY0GbKVtEAE\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token is present\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.token).to.be.a('string').and.to.have.lengthOf.at.least(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User object exists\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.user).to.be.an('object');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"tester\",\r\n    \"password\": \"tester123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "tester",
+									"disabled": true
+								},
+								{
+									"key": "passs",
+									"value": null,
+									"disabled": true
+								}
+							]
+						},
+						"description": "## **Body request**\n\n``` json\n{\n    \"username\": \"tester\",\n    \"password\": \"tester123\"\n}\n\n ```\n\n## **Response**\n\n``` json\n{\n    \"user\": {\n        \"id\": 101,\n        \"nama\": \"arthur\",\n        \"username\": \"tester\",\n        \"password\": \"$2b$10$yA.A9vQcl5f5nKXPDVuMIOSI7ec3pv7SqLqJ57kGdLckFHe0/W9wW\",\n        \"foto\": \"\",\n        \"aktif\": true,\n        \"createdAt\": \"2025-04-07T12:01:48.147Z\",\n        \"updatedAt\": \"2025-04-07T12:01:48.147Z\"\n    },\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAxLCJuYW1hIjoiYXJ0aHVyIiwiZm90byI6IiIsImFrdGlmIjp0cnVlLCJyb2xlIjoicGF0aWVudCIsImlhdCI6MTc0NDAyNzQ0MiwiZXhwIjoxNzQ0MDMxMDQyfQ.nbNvU4gyLr1Dnnde0rLNGcRACGC2-R0edTDfcXEN77k\"\n}\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "User Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201 or 200\", function () {\r",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User object is returned\", function () {\r",
+									"  const user = pm.response.json();\r",
+									"  pm.expect(user).to.be.an('object');\r",
+									"  pm.expect(user.id).to.be.a('number');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nama\": \"pasien\",\r\n    \"username\": \"pasien2\",\r\n    \"foto\" : \"\",\r\n    \"password\": \"pasien2\",\r\n    \"aktif\" : true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						},
+						"description": "## **BODY**\n\n``` json\n{\n    \"nama\": \"arthur\",\n    \"username\": \"tester\",\n    \"foto\" : \"\",\n    \"password\": \"tester123\",\n    \"aktif\" : true\n}\n\n ```\n\n## **RESPONSE**\n\n``` json\n{\n    \"id\": 101,\n    \"nama\": \"arthur\",\n    \"username\": \"tester\",\n    \"foto\": \"\",\n    \"password\": \"$2b$10$yA.A9vQcl5f5nKXPDVuMIOSI7ec3pv7SqLqJ57kGdLckFHe0/W9wW\",\n    \"aktif\": true,\n    \"updatedAt\": \"2025-04-07T12:01:48.147Z\",\n    \"createdAt\": \"2025-04-07T12:01:48.147Z\"\n}\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Admin Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201 or 200\", function () {\r",
+									"  pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Admin object is returned\", function () {\r",
+									"  const admin = pm.response.json();\r",
+									"  pm.expect(admin).to.be.an('object');\r",
+									"  pm.expect(admin.id).to.be.a('number');\r",
+									"  pm.expect(admin.nama).to.be.a('string');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nama\": \"admin\",\r\n    \"username\": \"adminklinikputriwamena1\",\r\n    \"foto\": \"\",\r\n    \"password\": \"klinik1231\",\r\n    \"aktif\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/admin/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"admin",
+								"register"
+							]
+						},
+						"description": "## **BODY**\n\n``` json\n{\n    \"nama\": \"admin\",\n    \"username\": \"admin\",\n    \"foto\": \"\",\n    \"password\": \"password123\",\n    \"aktif\": true\n}\n\n ```\n\n## **RESPONSE**\n\n``` json\n{\n    \"id\": 2,\n    \"nama\": \"admin\",\n    \"username\": \"admin\",\n    \"foto\": \"\",\n    \"password\": \"$2b$10$SKe7UpdQJHUv1dPgcHqkF.oztmjAyVnYaKrZzJKyvTTAsexprtvqe\",\n    \"aktif\": true,\n    \"updatedAt\": \"2025-04-07T11:27:27.729Z\",\n    \"createdAt\": \"2025-04-07T11:27:27.729Z\"\n}\n ```"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Spesialisasi",
+					"item": [
+						{
+							"name": "Spesialisasi",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/public/spesialisasi/list?all=true",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"spesialisasi",
+										"list"
+									],
+									"query": [
+										{
+											"key": "all",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Spesialisasi By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/public/spesialisasi/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"spesialisasi",
+										"1"
+									],
+									"query": [
+										{
+											"key": "all",
+											"value": "true",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Jadwal Dokter",
+					"item": [
+						{
+							"name": "Jadwal Dokter Spesialisasi",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/public/jadwal-dokter-spesialisasi/list?all=true",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"jadwal-dokter-spesialisasi",
+										"list"
+									],
+									"query": [
+										{
+											"key": "all",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Jadwal Dokter Umum",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/public/jadwal-dokter-umum/list?all=true",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"jadwal-dokter-umum",
+										"list"
+									],
+									"query": [
+										{
+											"key": "all",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Riwayat",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/riwayat/list",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"riwayat",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "History",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/riwayat/antrian/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"riwayat",
+								"antrian",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Antrean",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/riwayat/antrian/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"riwayat",
+								"antrian",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "Spesialisasi",
+					"item": [
+						{
+							"name": "Get By Id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtYSI6ImFkbWluIiwiZm90byI6IiIsImFrdGlmIjp0cnVlLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDQwNDc4MzMsImV4cCI6MTc0NDA1MTQzM30.HHo26-X5oXhFzy0R5umBuLrZq8NXChBVVEM2x_V-PFw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/spesialisasi/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"spesialisasi",
+										"1"
+									]
+								},
+								"description": "**RESPONSE**\n\n``` json\n{\n    \"id\": 1,\n    \"nama\": \"Ahli Gigi\",\n    \"jam_mulai\": \"09:11\",\n    \"jam_selesai\": \"10:11\",\n    \"hari\": \"['senin', 'selasa', 'rabu', 'sabtu']\",\n    \"estimasi\": 10,\n    \"aktif\": true,\n    \"foto\": \"1744047864705-pngtree-cute-cartoon-dentist-with-tooth-png-image_6950145.png\",\n    \"createdAt\": \"2025-04-07T17:44:24.714Z\",\n    \"updatedAt\": \"2025-04-07T17:44:24.714Z\",\n    \"fotoUrl\": \"http://localhost:5000/uploads/spesialisasi/1744047864705-pngtree-cute-cartoon-dentist-with-tooth-png-image_6950145.png\"\n}\n\n ```"
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtYSI6ImFkbWluIiwiZm90byI6IiIsImFrdGlmIjp0cnVlLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDQwNDc4MzMsImV4cCI6MTc0NDA1MTQzM30.HHo26-X5oXhFzy0R5umBuLrZq8NXChBVVEM2x_V-PFw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nama",
+											"value": "Ahli Gigi",
+											"type": "text"
+										},
+										{
+											"key": "jam_mulai",
+											"value": "09:11",
+											"type": "text"
+										},
+										{
+											"key": "jam_selesai",
+											"value": "10:11",
+											"type": "text"
+										},
+										{
+											"key": "foto",
+											"type": "file",
+											"src": "postman-cloud:///1effeab0-f0e8-4fd0-a56c-9dd368582186"
+										},
+										{
+											"key": "hari",
+											"value": "['senin', 'selasa', 'rabu', 'sabtu']",
+											"type": "text"
+										},
+										{
+											"key": "aktif",
+											"value": "true",
+											"type": "text"
+										},
+										{
+											"key": "estimasi",
+											"value": "10",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/spesialisasi/create",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"spesialisasi",
+										"create"
+									],
+									"query": [
+										{
+											"key": "nama",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "jam_mulai",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "jam_selesai",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "foto",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "hari_mulai",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "hari_selesai",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "aktif",
+											"value": "",
+											"disabled": true
+										}
+									]
+								},
+								"description": "## **RESPONSE**\n\n``` json\n{\n    \"id\": 2,\n    \"nama\": \"Ahli Gigi\",\n    \"jam_mulai\": \"09:11\",\n    \"jam_selesai\": \"10:11\",\n    \"hari\": \"['senin', 'selasa', 'rabu', 'sabtu']\",\n    \"aktif\": true,\n    \"estimasi\": 10,\n    \"foto\": \"1744048513413-pngtree-cute-cartoon-dentist-with-tooth-png-image_6950145.png\",\n    \"updatedAt\": \"2025-04-07T17:55:13.415Z\",\n    \"createdAt\": \"2025-04-07T17:55:13.415Z\",\n    \"fotoUrl\": \"http://localhost:5000/uploads/spesialisasi/1744048513413-pngtree-cute-cartoon-dentist-with-tooth-png-image_6950145.png\"\n}\n\n ```"
+							},
+							"response": []
+						},
+						{
+							"name": "Edit",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtYSI6ImFkbWluIiwiZm90byI6IiIsImFrdGlmIjp0cnVlLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDQwNDk3ODQsImV4cCI6MTc0NDA1MzM4NH0.g_a1EQGj-JJuZC5lJ0m-75ZA51UDvVoDlSlVwsWh6sA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nama",
+											"value": "Ahli Gigi",
+											"type": "text"
+										},
+										{
+											"key": "jam_mulai",
+											"value": "09:11",
+											"type": "text"
+										},
+										{
+											"key": "jam_selesai",
+											"value": "10:11",
+											"type": "text"
+										},
+										{
+											"key": "foto",
+											"type": "file",
+											"src": "postman-cloud:///1effeab0-f0e8-4fd0-a56c-9dd368582186"
+										},
+										{
+											"key": "hari",
+											"value": "[\"senin\",\"selasa\"]",
+											"type": "text"
+										},
+										{
+											"key": "aktif",
+											"value": "true",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "estimasi",
+											"value": "10",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/spesialisasi/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"spesialisasi",
+										"1"
+									],
+									"query": [
+										{
+											"key": "nama",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "jam_mulai",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "jam_selesai",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "foto",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "hari_mulai",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "hari_selesai",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "aktif",
+											"value": "",
+											"disabled": true
+										}
+									]
+								},
+								"description": "## **RESPONSE**\n\n``` json\n{\n    \"id\": 1,\n    \"nama\": \"Ahli Gigi\",\n    \"jam_mulai\": \"09:11\",\n    \"jam_selesai\": \"10:11\",\n    \"hari\": \"[\\\"senin\\\",\\\"selasa\\\"]\",\n    \"estimasi\": 10,\n    \"aktif\": true,\n    \"foto\": \"1744049803021-pngtree-cute-cartoon-dentist-with-tooth-png-image_6950145.png\",\n    \"createdAt\": \"2025-04-07T17:44:24.714Z\",\n    \"updatedAt\": \"2025-04-07T18:16:43.304Z\",\n    \"fotoUrl\": \"http://localhost:5000/uploads/spesialisasi/1744049803021-pngtree-cute-cartoon-dentist-with-tooth-png-image_6950145.png\"\n}\n ```"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/spesialisasi/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"spesialisasi",
+										"2"
+									]
+								},
+								"description": "## **BODY**\n\n``` json\n{\n    \"id\": 2,\n    \"nama\": \"Bidan\",\n    \"jam_mulai\": \"10:00\",\n    \"jam_selesai\": \"12:00\",\n    \"hari\": \"['senin', 'selasa', 'rabu', 'sabtu']\",\n    \"estimasi\": 30,\n    \"aktif\": true,\n    \"foto\": \"1744048513413-pngtree-cute-cartoon-dentist-with-tooth-png-image_6950145.png\",\n    \"createdAt\": \"2025-04-07T17:55:13.415Z\",\n    \"updatedAt\": \"2025-04-07T17:55:13.415Z\",\n    \"fotoUrl\": \"http://localhost:5000/uploads/spesialisasi/1744048513413-pngtree-cute-cartoon-dentist-with-tooth-png-image_6950145.png\"\n}\n\n ```\n\n## **RESPONSE**\n\n``` json\n{\n    \"response\": [],\n    \"message\": \"Spesialisasi deleted successfully\"\n}\n ```"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Doctor",
+					"item": [
+						{
+							"name": "Read",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/doctor/list",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"doctor",
+										"list"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "search",
+											"value": "MacGyver",
+											"disabled": true
+										},
+										{
+											"key": "all",
+											"value": "true",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/doctor/106",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"doctor",
+										"106"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nama",
+											"value": "Raihan Febriyansah",
+											"type": "text"
+										},
+										{
+											"key": "foto",
+											"type": "file",
+											"src": "/C:/Users/raiha/Pictures/Screenshots/default.png"
+										},
+										{
+											"key": "aktif",
+											"value": "true",
+											"type": "text"
+										},
+										{
+											"key": "spesialisasiId",
+											"value": "10",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/doctors/create",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"doctors",
+										"create"
+									],
+									"query": [
+										{
+											"key": "nama",
+											"value": "raihan",
+											"disabled": true
+										},
+										{
+											"key": "jam_mulai",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "jam_selesai",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "foto",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "hari_mulai",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "hari_selesai",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "aktif",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nama",
+											"value": "Raihan Febriyansah ganti",
+											"type": "text"
+										},
+										{
+											"key": "foto",
+											"type": "file",
+											"src": "/C:/Users/raiha/Pictures/Screenshots/11 Juli 2024.png",
+											"disabled": true
+										},
+										{
+											"key": "aktif",
+											"value": "true",
+											"type": "text"
+										},
+										{
+											"key": "spesialisasiId",
+											"value": "10",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/doctor/107",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"doctor",
+										"107"
+									],
+									"query": [
+										{
+											"key": "nama",
+											"value": "raihan",
+											"disabled": true
+										},
+										{
+											"key": "jam_mulai",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "jam_selesai",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "foto",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "hari_mulai",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "hari_selesai",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "aktif",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Patient",
+					"item": [
+						{
+							"name": "Read",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/patient/list",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"patient",
+										"list"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "search",
+											"value": "MacGyver",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/patient/2",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"patient",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nama",
+											"value": "Raihan Febriyansah",
+											"type": "text"
+										},
+										{
+											"key": "foto",
+											"type": "file",
+											"src": "/C:/Users/raiha/Pictures/Screenshots/default.png"
+										},
+										{
+											"key": "aktif",
+											"value": "true",
+											"type": "text"
+										},
+										{
+											"key": "spesialisasiId",
+											"value": "10",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/doctors/create",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"doctors",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nama",
+											"value": "Raihan Febriyansah ganti",
+											"type": "text"
+										},
+										{
+											"key": "foto",
+											"type": "file",
+											"src": "/C:/Users/raiha/Pictures/Screenshots/11 Juli 2024.png",
+											"disabled": true
+										},
+										{
+											"key": "aktif",
+											"value": "true",
+											"type": "text"
+										},
+										{
+											"key": "spesialisasiId",
+											"value": "10",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/doctor/107",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"doctor",
+										"107"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Upload Foto",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "foto",
+											"type": "file",
+											"src": "/C:/Users/raiha/Pictures/Screenshots/default.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/patient/uploadFoto/2",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"patient",
+										"uploadFoto",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Jadwal Dokter Spesialisasi",
+					"item": [
+						{
+							"name": "Read",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/jadwal-dokter-spesialisasi/list",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"jadwal-dokter-spesialisasi",
+										"list"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "search",
+											"value": "MacGyver",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/jadwal-dokter-spesialisasi/11",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"jadwal-dokter-spesialisasi",
+										"11"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"spesialisasiId\": 1,\r\n    \"doctorId\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/jadwal-dokter-spesialisasi/create",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"jadwal-dokter-spesialisasi",
+										"create"
+									],
+									"query": [
+										{
+											"key": "nama",
+											"value": "raihan",
+											"disabled": true
+										},
+										{
+											"key": "jam_mulai",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "jam_selesai",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "foto",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "hari_mulai",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "hari_selesai",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "aktif",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"spesialisasiId\": 1,\r\n    \"doctorId\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/jadwal-dokter-spesialisasi/11",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"jadwal-dokter-spesialisasi",
+										"11"
+									],
+									"query": [
+										{
+											"key": "nama",
+											"value": "raihan",
+											"disabled": true
+										},
+										{
+											"key": "jam_mulai",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "jam_selesai",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "foto",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "hari_mulai",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "hari_selesai",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "aktif",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Jadwal Dokter Umum",
+					"item": [
+						{
+							"name": "Read",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/jadwal-dokter-umum/list",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"jadwal-dokter-umum",
+										"list"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "search",
+											"value": "MacGyver",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/jadwal-dokter-umum/9",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"jadwal-dokter-umum",
+										"9"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"jadwal_mulai\": \"17:00\",\r\n    \"jadwal_selesai\": \"18:00\",\r\n    \"senin\": 1,\r\n    \"selasa\": 1,\r\n    \"rabu\": 1,\r\n    \"kamis\": 1,\r\n    \"jumat\": 1,\r\n    \"sabtu\": 1,\r\n    \"minggu\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/jadwal-dokter-umum/create",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"jadwal-dokter-umum",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"jadwal_mulai\": \"17:00\",\r\n    \"jadwal_selesai\": \"18:00\",\r\n    \"senin\": 1,\r\n    \"selasa\": 1,\r\n    \"rabu\": 1,\r\n    \"kamis\": 1,\r\n    \"jumat\": 1,\r\n    \"sabtu\": 1,\r\n    \"minggu\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/jadwal-dokter-umum/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"jadwal-dokter-umum",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Footer",
+					"item": [
+						{
+							"name": "Get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/footer/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"footer",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Reservasi",
+					"item": [
+						{
+							"name": "ALL",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtYSI6ImFydGh1ciIsImZvdG8iOiIiLCJha3RpZiI6dHJ1ZSwicm9sZSI6InBhdGllbnQiLCJpYXQiOjE3NDQwNTEyMTUsImV4cCI6MTc0NDA1NDgxNX0.UVj--Cb8uQjAMRbqxTcjZQOpw0JEcM8cyXmEKaoO-48",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/reservasi/list",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"reservasi",
+										"list"
+									],
+									"query": [
+										{
+											"key": "all",
+											"value": "true",
+											"disabled": true
+										}
+									]
+								},
+								"description": "## **RESPONSE**\n\n``` json\n{\n    \"data\": [\n        {\n            \"id\": 3,\n            \"spesialisasiId\": 1,\n            \"nama\": \"Arthur Limba\",\n            \"umur\": 20,\n            \"no_hp\": \"089517721586\",\n            \"alamat\": \"JL kenangan\",\n            \"jenis_kelamin\": \"laki-laki\",\n            \"appointmentTime\": \"08.30\",\n            \"appointmentDate\": \"2025-04-07T00:00:00.000Z\",\n            \"status\": \"proses\",\n            \"createdAt\": \"2025-04-07T18:48:39.061Z\",\n            \"updatedAt\": \"2025-04-07T18:48:39.061Z\",\n            \"Spesialisasi\": {\n                \"id\": 1,\n                \"nama\": \"Ahli Gigi\"\n            }\n        },\n        {\n            \"id\": 2,\n            \"spesialisasiId\": 1,\n            \"nama\": \"Arthur\",\n            \"umur\": 20,\n            \"no_hp\": \"089517721586\",\n            \"alamat\": \"JL kenangan\",\n            \"jenis_kelamin\": \"laki-laki\",\n            \"appointmentTime\": \"08.30\",\n            \"appointmentDate\": \"2025-04-07T00:00:00.000Z\",\n            \"status\": \"proses\",\n            \"createdAt\": \"2025-04-07T18:44:51.260Z\",\n            \"updatedAt\": \"2025-04-07T18:44:51.260Z\",\n            \"Spesialisasi\": {\n                \"id\": 1,\n                \"nama\": \"Ahli Gigi\"\n            }\n        }\n    ],\n    \"total\": 2,\n    \"page\": 1,\n    \"limit\": 10,\n    \"totalPages\": 1\n}\n\n ```"
+							},
+							"response": []
+						},
+						{
+							"name": "By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/reservasi/15",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"reservasi",
+										"15"
+									],
+									"query": [
+										{
+											"key": "all",
+											"value": "true",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtYSI6ImFydGh1ciIsImZvdG8iOiIiLCJha3RpZiI6dHJ1ZSwicm9sZSI6InBhdGllbnQiLCJpYXQiOjE3NDQwNTEyMTUsImV4cCI6MTc0NDA1NDgxNX0.UVj--Cb8uQjAMRbqxTcjZQOpw0JEcM8cyXmEKaoO-48",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nama\": \"Arthur Limba\",\r\n    \"umur\": 20,\r\n    \"no_hp\": \"089517721586\",\r\n    \"alamat\": \"JL kenangan\",\r\n    \"jenis_kelamin\": \"laki-laki\",\r\n    \"appointmentTime\": \"08.30\",\r\n    \"appointmentDate\": \"2025-04-07T00:00:00.000Z\",\r\n    \"status\": \"proses\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/reservasi/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"reservasi",
+										""
+									]
+								},
+								"description": "## BODY REQUEST\n\n``` json\n{\n    \"nama\": \"Arthur Limba\",\n    \"umur\": 20,\n    \"no_hp\": \"089517721586\",\n    \"alamat\": \"JL kenangan\",\n    \"jenis_kelamin\": \"laki-laki\",\n    \"appointmentTime\": \"08.30\",\n    \"appointmentDate\": \"2025-04-07T00:00:00.000Z\",\n    \"status\": \"proses\"\n}\n\n ```\n\n## **RESPONSE**\n\n``` json\n{\n    \"reservasi\": {\n        \"id\": 3,\n        \"spesialisasiId\": 1,\n        \"nama\": \"Arthur Limba\",\n        \"umur\": 20,\n        \"no_hp\": \"089517721586\",\n        \"alamat\": \"JL kenangan\",\n        \"jenis_kelamin\": \"laki-laki\",\n        \"appointmentDate\": \"2025-04-07T00:00:00.000Z\",\n        \"appointmentTime\": \"08.30\",\n        \"status\": \"proses\",\n        \"updatedAt\": \"2025-04-07T18:48:39.061Z\",\n        \"createdAt\": \"2025-04-07T18:48:39.061Z\"\n    },\n    \"riwayat\": {\n        \"id\": 2,\n        \"reservasiId\": 3,\n        \"spesialisasiId\": 1,\n        \"appointmentDate\": \"2025-04-07T00:00:00.000Z\",\n        \"appointmentTime\": \"08.30\",\n        \"nama\": \"Arthur Limba\",\n        \"status\": \"proses\",\n        \"nomorAntrian\": 2,\n        \"updatedAt\": \"2025-04-07T18:48:39.429Z\",\n        \"createdAt\": \"2025-04-07T18:48:39.429Z\"\n    }\n}\n ```"
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\" : 2,\r\n    \"spesialisasiId\": 1,\r\n    \"nama\": \"Arthur\",\r\n    \"umur\": 20,\r\n    \"no_hp\": \"089517721586\",\r\n    \"alamat\": \"JL kenangan\",\r\n    \"jenis_kelamin\": \"laki-laki\",\r\n    \"appointmentTime\": \"08.30\",\r\n    \"appointmentDate\": \"2025-04-07T00:00:00.000Z\",\r\n    \"status\": \"proses\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/reservasi/2?status=batal",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"reservasi",
+										"2"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "batal"
+										}
+									]
+								},
+								"description": "## **BODY REQUEST**\n\n``` json\n{\n    \"id\" : 2,\n    \"spesialisasiId\": 1,\n    \"nama\": \"Arthur\",\n    \"umur\": 20,\n    \"no_hp\": \"089517721586\",\n    \"alamat\": \"JL kenangan\",\n    \"jenis_kelamin\": \"laki-laki\",\n    \"appointmentTime\": \"08.30\",\n    \"appointmentDate\": \"2025-04-07T00:00:00.000Z\",\n    \"status\": \"proses\"\n}\n\n ```\n\n## **RESPONSE**\n\n``` json\n{\n    \"reservasi\": {\n        \"id\": 2,\n        \"spesialisasiId\": 1,\n        \"nama\": \"Arthur\",\n        \"umur\": 20,\n        \"no_hp\": \"089517721586\",\n        \"alamat\": \"JL kenangan\",\n        \"jenis_kelamin\": \"laki-laki\",\n        \"appointmentTime\": \"08.30\",\n        \"appointmentDate\": \"2025-04-07T00:00:00.000Z\",\n        \"status\": \"batal\",\n        \"createdAt\": \"2025-04-07T18:44:51.260Z\",\n        \"updatedAt\": \"2025-04-07T19:13:57.097Z\"\n    }\n}\n\n ```"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\" : 2,\r\n    \"spesialisasiId\": 1,\r\n    \"nama\": \"Arthur\",\r\n    \"umur\": 20,\r\n    \"no_hp\": \"089517721586\",\r\n    \"alamat\": \"JL kenangan\",\r\n    \"jenis_kelamin\": \"laki-laki\",\r\n    \"appointmentTime\": \"08.30\",\r\n    \"appointmentDate\": \"2025-04-07T00:00:00.000Z\",\r\n    \"status\": \"proses\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/reservasi/2",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"reservasi",
+										"2"
+									]
+								},
+								"description": "## **BODY REQUEST**\n\n``` json\n{\n    \"id\" : 2,\n    \"spesialisasiId\": 1,\n    \"nama\": \"Arthur\",\n    \"umur\": 20,\n    \"no_hp\": \"089517721586\",\n    \"alamat\": \"JL kenangan\",\n    \"jenis_kelamin\": \"laki-laki\",\n    \"appointmentTime\": \"08.30\",\n    \"appointmentDate\": \"2025-04-07T00:00:00.000Z\",\n    \"status\": \"proses\"\n}\n\n ```\n\n## **RESPONSE**\n\n``` json\n{\n    \"message\": \"Reservasi deleted successfully\"\n}\n ```"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://localhost:4000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtYSI6ImFkbWluIiwiZm90byI6IiIsImFrdGlmIjp0cnVlLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDM5MzQyMDUsImV4cCI6MTc0MzkzNzgwNX0._bfQUy5YGI4-hpkqKEy7bS_hx2G9iqGgskyb9akfmto",
+			"type": "string"
+		}
+	]
+}

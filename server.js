@@ -51,13 +51,17 @@ app.use('/api/jadwal-dokter-spesialisasi', jadwalDokterSpesialisasiRoutes);
 app.use('/api/jadwal-dokter-umum', jadwalDokterUmumRoutes);
 app.use('/api/footer', footerRoutes);
 
-
 // user
 app.use('/api/riwayat', riwayatRoutes);
 app.use('/api/reservasi', reservasiRoutes);
 
 // public
 app.use('/api/public', publicRoutes);
+
+// Tambahkan route root '/' untuk pengecekan di browser
+app.get('/', (req, res) => {
+  res.send('Backend API is running');
+});
 
 if (process.env.VERCEL) {
   // Di Vercel, export app sehingga fungsi serverless dapat memproses request

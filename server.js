@@ -31,11 +31,12 @@ app.use(
         : process.env.CORS_URL?.split(' '),
     methods:
       process.env.CORS_METHODS === '*'
-        ? '*'
+        ? ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
         : process.env.CORS_METHODS?.split(' '),
-        credentials: true,
+    credentials: true,
   })
 );
+
 app.use(Cookies());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

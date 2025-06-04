@@ -1,9 +1,11 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const bodyParser = require('body-parser');
 const Cookies = require('cookie-parser');
-const multer = require('multer');
 const sequelize = require('./config/database');
+const path = require('path');
+const cors = require('cors');
+
+// Routes import
 const adminRoutes = require('./routes/adminRoutes');
 const authRoutes = require('./routes/authRoutes');
 const patientRoutes = require('./routes/patientRoutes');
@@ -15,32 +17,31 @@ const publicRoutes = require('./routes/publicRoutes');
 const riwayatRoutes = require('./routes/riwayatRoutes');
 const reservasiRoutes = require('./routes/reservasiRoutes');
 const footerRoutes = require('./routes/footerRoutes');
-const cors = require('cors');
-const path = require('path');
 
 dotenv.config();
+
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// Middleware
-app.use(
-  cors({
-    origin:
-      process.env.CORS_URL === '*'
-        ? '*'
-        : process.env.CORS_URL?.split(' '),
-    methods:
-      process.env.CORS_METHODS === '*'
-        ? ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
-        : process.env.CORS_METHODS?.split(' '),
-    credentials: true,
-  })
-);
+// Middleware CORS dengan dynamic origin check
+app.use(cors({
+  origin: function (origin, callback) {
+    const allowedOrigins = process.env.CORS_URL?.split(' ') || [];
+    if (!origin || process.env.CORS_URL === '*' || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS policy: Origin ${origin} is not allowed.`));
+    }
+  },
+  methods: process.env.CORS_METHODS?.split(' ') || ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
+}));
 
 app.use(Cookies());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Static folder untuk upload file
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes
@@ -52,27 +53,18 @@ app.use('/api/doctor', doctorRoutes);
 app.use('/api/jadwal-dokter-spesialisasi', jadwalDokterSpesialisasiRoutes);
 app.use('/api/jadwal-dokter-umum', jadwalDokterUmumRoutes);
 app.use('/api/footer', footerRoutes);
-
-// user
 app.use('/api/riwayat', riwayatRoutes);
 app.use('/api/reservasi', reservasiRoutes);
-
-// public
 app.use('/api/public', publicRoutes);
 
-// Tambahkan route root '/' untuk pengecekan di browser
-app.get('/', (req, res) => {
-  res.send('Backend API is running');
-});
-
+// Export app untuk Vercel Serverless
 if (process.env.VERCEL) {
-  // Di Vercel, export app sehingga fungsi serverless dapat memproses request
   module.exports = app;
 } else {
-  // Untuk development lokal
-  const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
-    sequelize.authenticate().then(() => console.log('Database connected'));
+    sequelize.authenticate()
+      .then(() => console.log('Database connected'))
+      .catch(err => console.error('Database connection error:', err));
   });
 }

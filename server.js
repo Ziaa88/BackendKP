@@ -56,8 +56,6 @@ app.use('/api/footer', footerRoutes);
 app.use('/api/riwayat', riwayatRoutes);
 app.use('/api/reservasi', reservasiRoutes);
 app.use('/api/public', publicRoutes);
-app.use('api/admin/uploadFoto', adminRoutes);
-app.use('api/patient/uploadFoto', patientRoutes);
 
 
 // Tambahkan route root '/' untuk pengecekan di browser

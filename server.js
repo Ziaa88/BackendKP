@@ -33,6 +33,7 @@ app.use(
       process.env.CORS_METHODS === '*'
         ? '*'
         : process.env.CORS_METHODS?.split(' '),
+        credentials: true,
   })
 );
 app.use(Cookies());

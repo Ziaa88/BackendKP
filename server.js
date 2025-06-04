@@ -56,6 +56,14 @@ app.use('/api/footer', footerRoutes);
 app.use('/api/riwayat', riwayatRoutes);
 app.use('/api/reservasi', reservasiRoutes);
 app.use('/api/public', publicRoutes);
+app.use('api/admin/uploadFoto', adminRoutes);
+app.use('api/patient/uploadFoto', patientRoutes);
+
+
+// Tambahkan route root '/' untuk pengecekan di browser
+app.get('/', (req, res) => {
+  res.send('Backend API is running');
+});
 
 // Export app untuk Vercel Serverless
 if (process.env.VERCEL) {

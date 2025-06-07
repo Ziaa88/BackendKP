@@ -1,13 +1,19 @@
 const AuthService = require('../services/authService');
 const jwt = require('jsonwebtoken');
+const { getFileUrl } = require('../utils/fileUtils');
 
 class AuthController {
-   static async login(req, res) {
+  static async login(req, res) {
     const { username, password } = req.body;
     try {
       const { user, token } = await AuthService.login({ username, password });
       const decoded = jwt.decode(token);
-      res.json({ user, token, role: decoded.role });
+      const userWithFotoUrl = {
+        ...user.toJSON ? user.toJSON() : user,
+        fotoUrl: getFileUrl(user.foto, req, 'patient'),
+      };
+
+      res.json({ user: userWithFotoUrl, token, role: decoded.role });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
@@ -30,12 +36,19 @@ class AuthController {
       res.status(400).json({ message: error.message });
     }
   }
+
   static async adminLogin(req, res) {
     try {
       const { username, password } = req.body;
       const { admin, token } = await AuthService.adminLogin({ username, password });
       const decoded = jwt.decode(token);
-      res.json({ admin, token, role: decoded.role });
+
+      const adminWithFotoUrl = {
+        ...admin.toJSON ? admin.toJSON() : admin,
+        fotoUrl: getFileUrl(admin.foto, req, 'admin'),
+      };
+
+      res.json({ admin: adminWithFotoUrl, token, role: decoded.role });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }

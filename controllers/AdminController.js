@@ -2,7 +2,7 @@ const AdminRepository = require('../repositories/AdminRepository');
 const bcrypt = require('bcryptjs');
 const { getFileUrl } = require('../utils/fileUtils');
 const supabase = require('../utils/supabaseClient');
-const path = require('path');
+
 
 
 

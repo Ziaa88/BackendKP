@@ -3,9 +3,6 @@ const bcrypt = require('bcryptjs');
 const { getFileUrl } = require('../utils/fileUtils');
 const supabase = require('../utils/supabaseClient');
 
-
-
-
 class AdminController {
   static async getAllAdmin(req, res) {
     try {
@@ -34,46 +31,23 @@ class AdminController {
     }
   }
 
-static async uploadFoto(req, res) {
-  try {
-    const adminId = req.params.id;
-
-    if (!req.file) {
-      return res.status(400).json({ message: 'No file uploaded' });
-    }
-
-    const fileExt = path.extname(req.file.originalname);
-    const fileName = `admin/${Date.now()}_${adminId}${fileExt}`;
-
-    // Upload ke Supabase Storage
-    const { data, error } = await supabase.storage
-      .from('uploads') // nama bucket
-      .upload(fileName, req.file.buffer, {
-        contentType: req.file.mimetype,
-        upsert: true, // timpa jika sudah ada
+    static async uploadFoto(req, res) {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: 'No file uploaded' });
+      }
+      const updated = await AdminRepository.updateAdmin(req.params.id, {
+        foto: req.file.filename,
       });
-
-    if (error) throw error;
-
-    // Ambil public URL
-    const { data: publicUrl } = supabase
-      .storage
-      .from('admin')
-      .getPublicUrl(fileName);
-
-    // Simpan ke database
-    const updated = await AdminRepository.updateAdmin(adminId, {
-      foto: publicUrl.publicUrl
-    });
-
-    res.status(200).json({
-      ...updated.toJSON(),
-      fotoUrl: publicUrl.publicUrl
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+      const result = {
+        ...updated.toJSON(),
+        fotoUrl: getFileUrl(updated.foto, req, 'admin')
+      };
+      res.json(result);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
   }
-}
 
   static async updateFoto(req, res) {
   try {
